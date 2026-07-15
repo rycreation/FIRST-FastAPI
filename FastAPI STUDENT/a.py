@@ -5,9 +5,10 @@ from StudentRequest import Srequest
 from studentResponse import studentResponse
 
 
-
-app = FastAPI()
-
+app = FastAPI(
+         title="PROJECT 2",
+         description="STUDENT API"
+)
 
 STUDENTS =[
     Student(1,"Tony", 42, "Python", True),
