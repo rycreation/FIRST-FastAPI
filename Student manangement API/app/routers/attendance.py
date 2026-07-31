@@ -18,9 +18,7 @@ def mark_attendance(
     current_user: models.User = Depends(get_current_user)
 ):
 
-    student = db.query(models.Student).filter(
-        models.Student.id == attendance.student_id
-    ).first()
+    student = db.query(models.Student).filter(models.Student.id == attendance.student_id).first()
 
     if not student:
         raise HTTPException(
@@ -30,14 +28,10 @@ def mark_attendance(
 
     existing = db.query(models.Attendance).filter(
         models.Attendance.student_id == attendance.student_id,
-        models.Attendance.date == attendance.date
-    ).first()
+        models.Attendance.date == attendance.date).first()
 
     if existing:
-        raise HTTPException(
-            status_code=400,
-            detail="Attendance already marked for this date"
-        )
+        raise HTTPException( status_code=400,detail="Attendance already marked for this date")
 
     new_attendance = models.Attendance(
         student_id=attendance.student_id,
@@ -69,15 +63,10 @@ def get_attendance_by_id(
     current_user: models.User = Depends(get_current_user)
 ):
 
-    attendance = db.query(models.Attendance).filter(
-        models.Attendance.id == attendance_id
-    ).first()
+    attendance = db.query(models.Attendance).filter(models.Attendance.id == attendance_id).first()
 
     if not attendance:
-        raise HTTPException(
-            status_code=404,
-            detail="Attendance record not found"
-        )
+        raise HTTPException( status_code=404,detail="Attendance record not found")
 
     return attendance
 
@@ -91,15 +80,10 @@ def update_attendance(
     current_user: models.User = Depends(get_current_user)
 ):
 
-    db_attendance = db.query(models.Attendance).filter(
-        models.Attendance.id == attendance_id
-    ).first()
+    db_attendance = db.query(models.Attendance).filter( models.Attendance.id == attendance_id).first()
 
     if not db_attendance:
-        raise HTTPException(
-            status_code=404,
-            detail="Attendance record not found"
-        )
+        raise HTTPException(status_code=404,detail="Attendance record not found")
 
     update_data = attendance.model_dump(exclude_unset=True)
 
@@ -119,15 +103,10 @@ def delete_attendance(
     current_user: models.User = Depends(get_current_user)
 ):
 
-    attendance = db.query(models.Attendance).filter(
-        models.Attendance.id == attendance_id
-    ).first()
+    attendance = db.query(models.Attendance).filter(models.Attendance.id == attendance_id).first()
 
     if not attendance:
-        raise HTTPException(
-            status_code=404,
-            detail="Attendance record not found"
-        )
+        raise HTTPException(status_code=404,detail="Attendance record not found")
 
     db.delete(attendance)
     db.commit()
