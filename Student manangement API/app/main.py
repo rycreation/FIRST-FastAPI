@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from app.database import engine
 from app import models
-from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, student,course,enrollment,attendance
 
 
@@ -19,6 +18,5 @@ app.include_router(attendance.router,prefix="/api/v1")
 
 @app.get("/")
 def home():
-    return{
-        "Student Management APi Runinng Successfully"
-    }
+    return  "Student Management APi Runinng Successfully"
+    
