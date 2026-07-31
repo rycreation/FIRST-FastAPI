@@ -10,15 +10,6 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Student Management API")
 
-#CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],    #change in production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
-
 
 app.include_router(auth.router,prefix="/api/v1")
 app.include_router(student.router,prefix="/api/v1") 
